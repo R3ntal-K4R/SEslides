@@ -226,6 +226,43 @@ app.run(host="0.0.0.0", debug=True)
 			
 				
 
+<<<<<<< HEAD
+				<section>IV. Backing services</section>
+				<section>
+					<section><h1>V. Build, release, run</h1><h5>From codebase to Deploy</h5></section>
+					<section>
+						<h1>The 3 Phases</h1>
+						<h2 class="fragment"><span style="color: orange;">BUILD</span>: Executable (.exe) file is created.</h2>
+						<h2 class="fragment"><span style="color: rgb(172, 99, 208);">RELEASE</span>: Executable file + config file = release object</h2>
+						<h2 class="fragment"><span style="color: rgb(96, 195, 95);">RUN</span>: </h2>
+					</section>
+					<section>
+						<h1>12 Factor Approach</h1>
+						<strong style="color: royalblue;">The twelve-factor app uses strict separation between the build, release, and run stages.</strong>
+						<h2 class="fragment"><span style="color: orange;">BUILD</span>: docker build script</h2>
+						<h2 class="fragment"><span style="color: rgb(172, 99, 208);">RELEASE</span>: unique release ID, change to code = new release</h2>
+						<h2 class="fragment"><span style="color: rgb(96, 195, 95);">RUN</span>: same build is run in all environments. Impossible to make runtime changes</h2>
+					</section>
+					<section>
+						<h1>release management tools</h1>
+
+					</section>
+				</section>
+				<section>VI. Processes</section>
+				<section>VII. Port binding</section>
+				<section>VIII. Concurrency</section>
+				<section>
+					<section>
+						<h1>IX. Disposability</h1>
+					</section>
+					<section>
+						<h1>12 Factor App Characteristics</h1>
+						<p class="fragment" style="color: royalblue;">"The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice."</p>
+						<li class="fragment">trive to minimize startup time</li>
+						<li class="fragment">shut down gracefully when they receive a SIGTERM</li>
+					</section>
+				</section>
+=======
 				<section>
 					<section data-markdown="slide_test.html" role="slide"></section>
 					<section>
@@ -385,28 +422,54 @@ app.run(host="0.0.0.0", debug=True)
 				</section>
 				
 				<section>IX. Disposability</section>
+>>>>>>> main
 				<section>X. Dev/prod parity</section>
 				<section>
 					<section>
 						<h1>XI. Logs</h1>
 					</section>
 					<section>
-						Somthing
+						Something
 					</section>
 					<section>
 						<h2>
 							Common Practice
 						</h2>
+						<p class="fragment">
+<<<<<<< HEAD
+							- Having app write logs to a logsFile.txt
+						</p>
+						<p class="fragment">
+							- sending logs to SPECIFIC logging provider
+						</p>
+						<p class="fragment">
+							- THESE ARE DISCOURAGED
+						</p>
+						<h6 style="color: yellow;", class="fragment">
+							Why?
+						</h6>
+						<p class="fragment">
+							- these files can be lost if a container is killed
+						</p>
+						<p class="fragment">
+							- tie the code to a specific solution, not PORTABLE
+=======
+							- Poopy
+>>>>>>> main
+						</p>
 					</section>
 					<section id="fragments">
 						<h2>
 							12 Factor Practices
 						</h2>
 						<p class="fragment">
-							- Poopy
+							- "A twelve-factor app never concerns itself with routing or storage of its output stream."
 						</p>
 						<p class="fragment">
-							- butt
+							- handling logs is specified by the <span style="color: aqua;">environment</span>
+						</p>
+						<p class="fragment">
+							- logs can be more stuctured depending on the logging service you use
 						</p>
 					</section>
 				</section>
