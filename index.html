@@ -3,36 +3,83 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 		<title>reveal.js</title>
-
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
 
-		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+
+			html, body {
+				height: 100%;
+				margin: 0;
+				overflow: hidden;
+			}
+
+			.reveal {
+				height: 100vh;
+				padding-top: 0px;
+				padding-bottom: 0px;
+				box-sizing: border-box;
+			}
+
+			.reveal .slides {
+				font-size: 32px;
+				max-width: 800px;
+				margin: 0 auto;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+				<section>
+					<h2 style="color: rgb(104, 104, 203);">1</h2>
+					<h2>Codebase: One Codebase, Multiple Deployments</h2>
+					<p>A single source code repository should be used for every application. Different environments should be handled using environment variables rather than separate codebases.</p>
+					<p>Best Practice: Use Git, Azure Repos, or GitHub.</p>
+					<p>Example:</p>
+					<pre><code>git clone https://github.com/example/app-repo.git</code></pre>
+				</section>
+
+				<section>
+					<h2 style="color: rgb(104, 104, 203);">2</h2>
+					<h2>Dependencies: Explicitly Declare and Isolate Dependencies</h2>
+					<p>Applications should never rely on system-wide dependencies. Instead, package managers should be used.</p>
+					<p>Best Practice: Use Docker to ensure dependency isolation.</p>
+					<p>Example:</p>
+					<pre><code>dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre>
+				</section>
+
+				<section>
+					<h2 style="color: rgb(104, 104, 203);">6</h2>
+					<h2>Processes: Execute the App as One or More Stateless Processes</h2>
+					<p>Applications should not rely on local file storage or in-memory sessions.</p>
+					<p>Best Practice: Use Azure Blob Storage instead of local disk storage.</p>
+					<p>Example:</p>
+					<pre><code>var blob = new BlobClient(connectionString, containerName, blobName);
+await blob.UploadAsync(fileStream);</code></pre>
+				</section>
+
+				<section>
+					<h2 style="color: rgb(104, 104, 203);">10</h2>
+					<h2>Dev/Prod Parity: Keep Development, Staging, and Production as Similar as Possible</h2>
+					<p>Minimize differences between environments to avoid surprises in production.</p>
+					<p>Best Practice: Use Docker Compose to mirror production environments locally.</p>
+					<p>Example:</p>
+					<pre><code>docker-compose up -d</code></pre>
+				</section>
 			</div>
 		</div>
-
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
-				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
 		</script>
