@@ -75,7 +75,37 @@
 					</section>
 				</section>
 				
-				<section>III. Config</section>
+
+				<section>
+					<section>
+						<h2>III. Config</h2>
+						<p>Store config in the environment</p>
+	
+					</section>
+					<section data-auto-animate id="fragments">
+						<p data-id="code-title">app.py</p>
+						<pre data-id="code_animation" class="fragment">
+							$ pip install
+						</pre>
+						<pre data-id="code_animation">
+							<code data-line-numbers="|1">from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def welcome_physics_friend():
+	return "Hi physics friend"
+
+if __name__ == "__main__":
+app.run(host="0.0.0.0", debug=True)
+							</code>
+						</pre>
+
+
+					</section>
+				</section>
+				
+
 				<section>IV. Backing services</section>
 				<section>V. Build, release, run</section>
 				<section>VI. Processes</section>
