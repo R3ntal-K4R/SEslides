@@ -323,20 +323,38 @@ app.run(host="0.0.0.0", debug=True)
 					<section><h1>V. Build, release, run</h1><h5>From codebase to Deploy</h5></section>
 					<section>
 						<h1>The 3 Phases</h1>
-						<h2 class="fragment"><span style="color: orange;">BUILD</span>: Executable (.exe) file is created.</h2>
+						<h2 class="fragment"><span style="color: orange;">BUILD</span>: Executable file is created</h2>
 						<h2 class="fragment"><span style="color: rgb(172, 99, 208);">RELEASE</span>: Executable file + config file = release object</h2>
-						<h2 class="fragment"><span style="color: rgb(96, 195, 95);">RUN</span>: </h2>
+						<h2 class="fragment"><span style="color: rgb(96, 195, 95);">RUN</span>: Run the app in execution Environment</h2>
 					</section>
 					<section>
 						<h1>12 Factor Approach</h1>
 						<strong style="color: royalblue;">The twelve-factor app uses strict separation between the build, release, and run stages.</strong>
-						<h2 class="fragment"><span style="color: orange;">BUILD</span>: docker build script</h2>
+						<h2 class="fragment"><span style="color: orange;">BUILD</span>: Builde executable (docker build script)</h2>
 						<h2 class="fragment"><span style="color: rgb(172, 99, 208);">RELEASE</span>: unique release ID, change to code = new release</h2>
 						<h2 class="fragment"><span style="color: rgb(96, 195, 95);">RUN</span>: same build is run in all environments. Impossible to make runtime changes</h2>
 					</section>
 					<section>
+						<h1>Helpful because...</h1>
+						<h2>Mistakes in code</h2>
+						<pre><code class="python">
+							#release V02
+							print("Goodbye, World")
+							</code></pre>
+						<li class="file">Fixing, committing, and re-deploying takes too long</li>
+						<li class="fragment">You can rollback to previous release because you can store build artifacts</li>
+					</section>
+					<section>
+						<h1>Rollback</h1>
+						<pre><code class="python">
+							#release V01
+							print("Hello, World")
+							</code></pre>
+						<h2>all good now, this is much faster</h2>
+					</section>
+					<section>
 						<h1>release management tools</h1>
-
+						<li style="color: rgba(8, 151, 8, 0.658);">Capistrano: A deployment automation tool</li>
 					</section>
 				</section>
 				<section>VI. Processes</section>
@@ -352,7 +370,35 @@ app.run(host="0.0.0.0", debug=True)
 						<h1>12 Factor App Characteristics</h1>
 						<p class="fragment" style="color: royalblue;">"The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice."</p>
 						<li class="fragment">trive to minimize startup time</li>
-						<li class="fragment">shut down gracefully when they receive a SIGTERM</li>
+						<li class="fragment">Processes shut down gracefully when they receive a SIGTERM signal</li>
+					</section>
+					<section>
+						<h1>Graceful Shutdown</h1>
+						<h3 class="fragment" style="color: purple;">For Web process</h3>
+						<li class="fragment">Needs a process manager to receive SIGTERM</li>
+						<li class="fragment">Needs to stop listening to new requests</li>
+						<li class="fragment">Needs to complete current request</li>
+						<li class="fragment">Then terminate</li>
+						<h3 class="fragment" style="color: purple;">For Worker process</h3>
+						<li class="fragment">Return current job to the work queue</li>
+					</section>
+					<section>
+						<h2>What does It look Like</h2>
+						<h6>Pseudo Example With RabbitMQ</h6>
+						<pre><code class="python">
+							import pika
+
+def callback(ch, method, properties, body):
+    try:
+        # Process the message
+        process_message(body)
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+    except Exception as e:
+        # Something went wrong, we send NACK
+        ch.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
+
+						</code></pre>
+						<p>Sends a NACK (Negative Acknowledgment) if the message fails.</p>
 					</section>
 				</section>
 				<section>
@@ -389,7 +435,6 @@ app.run(host="0.0.0.0", debug=True)
 					</section>
 
 				</section>
-				<section>V. Build, release, run</section>
 				<section>VI. Processes</section>
 				
 
@@ -755,15 +800,11 @@ app.run(host="0.0.0.0", debug=True)
 						<p>our application needs to be built as a <span style="color: #f998ee;">Stateless</span>, <span style="color: #f9c898;">independent service</span>.</p>
 					</section>
 
-				
-				<section>IX. Disposability</section>
+
 				<section>X. Dev/prod parity</section>
 				<section>
 					<section>
 						<h1>XI. Logs</h1>
-					</section>
-					<section>
-						Something
 					</section>
 					<section>
 						<h2>
@@ -786,7 +827,6 @@ app.run(host="0.0.0.0", debug=True)
 						</p>
 						<p class="fragment">
 							- tie the code to a specific solution, not PORTABLE
-							- Poopy
 						</p>
 					</section>
 					<section id="fragments">
@@ -796,15 +836,84 @@ app.run(host="0.0.0.0", debug=True)
 						<p class="fragment">
 							- "A twelve-factor app never concerns itself with routing or storage of its output stream."
 						</p>
+						<p class=" fragment">
+							each running process writes its event stream, unbuffered, to stdout.
+						</p>
 						<p class="fragment">
 							- handling logs is specified by the <span style="color: aqua;">environment</span>
 						</p>
 						<p class="fragment">
-							- logs can be more stuctured depending on the logging service you use
+							- logs are structured (how depends what you use)
 						</p>
 					</section>
+					<section style="background-color: #999;">
+						<h2>Example for Fluentd</h2>
+						<img src=".\src\Fluentd_square.png">
+					</section>
+					<section>
+						<h2>For log stream</h2>
+						<pre><code class="python" style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; max-height: 80vh; height: auto;">
+							# log_writer.py
+							import logging
+							import sys
+							import time
+							import json
+							
+							logger = logging.getLogger('stdout_logger')
+							logger.setLevel(logging.INFO)
+							
+							handler = logging.StreamHandler(sys.stdout)
+							formatter = logging.Formatter('%(message)s')
+							handler.setFormatter(formatter)
+							logger.addHandler(handler)
+							
+							for i in range(5):
+								log_entry = {
+									"timestamp": time.time(),
+									"message": f"Log message {i}",
+									"level": "info"
+								}
+								logger.info(json.dumps(log_entry))
+								time.sleep(1)
+								</code></pre>
+								<h5 style="color: rgb(193, 152, 76);">This doen't know fluentd exists</h5>
+					</section>
+					<section>
+						<h3>The Fluentd config</h3>
+						<pre><code class="xml">
+							&lt;source&gt;
+							  @type forward
+							  port 24224
+							  bind 0.0.0.0
+							&lt;/source&gt;
+							
+							&lt;filter **&gt;
+							  @type stdout
+							&lt;/filter&gt;
+							
+							&lt;match **&gt;
+							  @type file
+							  path /var/log/fluentd/output.log
+							  append true
+							  time_slice_format %Y%m%d%H
+							  time_format %Y-%m-%dT%H:%M:%S%z
+							  format json
+							&lt;/match&gt;
+							</code></pre>
+					</section>
 				</section>
-				<section>XII. Admin processes</section>
+				<section>
+					<h1>XII. Admin processes</h1>
+				</section>
+				<li>
+					run as separate, ONE OFF, app, but identical.
+				</li>
+				<li>
+					Maintenance
+				</li>
+				<section>
+					
+				</section>
 
 				<section>
 					<h2 style="color: rgb(104, 104, 203);">10</h2>
