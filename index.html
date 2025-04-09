@@ -52,7 +52,7 @@
 					<p>Example:</p>
 					<pre><code>dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre>
 				</section>
-
+ 
 				<section>
 					<h2 style="color: rgb(104, 104, 203);">6</h2>
 					<h2>Processes: Execute the App as One or More Stateless Processes</h2>
@@ -95,7 +95,22 @@ app.run(host="0.0.0.0", debug=True)
 				
 
 				<section>IV. Backing services</section>
-				<section>V. Build, release, run</section>
+				<section>
+					<section><h1>V. Build, release, run</h1></section>
+					<section>
+						<h1>The 3 Phases</h1>
+						<h2><span style="color: orange;">BUILD</span>: how build</h2>
+						<h2><span style="color: rgb(172, 99, 208);">RELEASE</span>: how release</h2>
+						<h2><span style="color: rgb(96, 195, 95);">RUN</span>: how run</h2>
+					</section>
+					<section>
+						<h1>12 Factor Approach</h1>
+						<p>--
+							--
+							
+						</p>
+					</section>
+				</section>
 				<section>VI. Processes</section>
 				<section>VII. Port binding</section>
 				<section>VIII. Concurrency</section>
@@ -106,22 +121,43 @@ app.run(host="0.0.0.0", debug=True)
 						<h1>XI. Logs</h1>
 					</section>
 					<section>
-						Somthing
+						Something
 					</section>
 					<section>
 						<h2>
 							Common Practice
 						</h2>
+						<p class="fragment">
+							- Having app write logs to a logsFile.txt
+						</p>
+						<p class="fragment">
+							- sending logs to SPECIFIC logging provider
+						</p>
+						<p class="fragment">
+							- THESE ARE DISCOURAGED
+						</p>
+						<h6 style="color: yellow;", class="fragment">
+							Why?
+						</h6>
+						<p class="fragment">
+							- these files can be lost if a container is killed
+						</p>
+						<p class="fragment">
+							- tie the code to a specific solution, not PORTABLE
+						</p>
 					</section>
 					<section id="fragments">
 						<h2>
 							12 Factor Practices
 						</h2>
 						<p class="fragment">
-							- Poopy
+							- "A twelve-factor app never concerns itself with routing or storage of its output stream."
 						</p>
 						<p class="fragment">
-							- butt
+							- handling logs is specified by the <span style="color: aqua;">environment</span>
+						</p>
+						<p class="fragment">
+							- logs can be more stuctured depending on the logging service you use
 						</p>
 					</section>
 				</section>
