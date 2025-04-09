@@ -38,23 +38,50 @@
 			<div class="slides">
 
 				<section>
-					<h2 style="color: rgb(104, 104, 203);">1</h2>
-					<h2>Codebase: One Codebase, Multiple Deployments</h2>
-					<p>A single source code repository should be used for every application. Different environments should be handled using environment variables rather than separate codebases.</p>
-					<p>Best Practice: Use Git, Azure Repos, or GitHub.</p>
-					<p>Example:</p>
-					<pre><code>git clone https://github.com/example/app-repo.git</code></pre>
+					<!-- Slide 1: Code Example -->
+					<section>
+					  <h2 style="color: rgb(104, 104, 203);">1</h2>
+					  <h2>Codebase: One Codebase, Multiple Deployments</h2>
+					  <p>A single source code repository should be used for every application. Different environments should be handled using environment variables rather than separate codebases.</p>
+					  <p>Best Practice: Use Git, Azure Repos, or GitHub.</p>
+					  
+					</section>
+						<section>
+						<h2>Example:</h2>
+						<p>
+							This approach ensures that your deployment process is streamlined across multiple environments. By keeping a single codebase and utilizing environment variables.
+						</p>
+							<pre data-id="code_animation">
+							<code data-line-numbers="|1">git clone https://github.com/example/app-repo.git</code></pre>
+						</section>
+					</section>
 				</section>
 
 				<section>
-					<h2 style="color: rgb(104, 104, 203);">2</h2>
-					<h2>Dependencies: Explicitly Declare and Isolate Dependencies</h2>
-					<p>Applications should never rely on system-wide dependencies. Instead, package managers should be used.</p>
-					<p>Best Practice: Use Docker to ensure dependency isolation.</p>
-					<p>Example:</p>
-					<pre><code>dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre>
+					<!-- Slide 1: Explanation -->
+					<section>
+					  <h2 style="color: rgb(104, 104, 203);">2</h2>
+					  <h2>Dependencies: Explicitly Declare and Isolate Dependencies</h2>
+					  <p>
+						Applications should never rely on system-wide dependencies. Instead, package managers should be used to manage required libraries and tools.
+					  </p>
+					  <p>
+						Package managers like NuGet (for .NET) should be used
+					  </p>
+					</section>
+				  
+					<!-- Slide 2: Code Example with Explanations -->
+					<section>
+					  <h2>Best Practice:</h2>
+					  <p>Use Docker to ensure dependency isolation</p>
+					  <p> </p>
+					  <p> </p>
+					  <h4>Example of .NET:</h4>
+					  <pre><code>dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre>
+					</section>
 				</section>
- 
+			
+
 				<section>
 					<h2 style="color: rgb(104, 104, 203);">6</h2>
 					<h2>Processes: Execute the App as One or More Stateless Processes</h2>
